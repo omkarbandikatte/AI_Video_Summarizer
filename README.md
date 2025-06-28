@@ -32,9 +32,9 @@ This Streamlit-based app extracts transcripts from YouTube videos (if available)
 ## 📁 Project Structure
 
 video_summarizer/
-├── video_summarizer.py # Main Streamlit app
-├── requirements.txt # Python dependencies
-├── .env # API keys (GROQ_API_KEY)
+├── video_summarizer.py     
+├── requirements.txt        
+├── .env      
 
 
 ---
