@@ -1,22 +1,19 @@
 from youtube_transcript_api import YouTubeTranscriptApi
 import streamlit as st
-from groq import Groq
 import os
-from dotenv import load_dotenv
 import requests
+from dotenv import load_dotenv
 
 load_dotenv()
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 prompt = """You are a Youtube Video SUmmarizer which summarizers the video transcript in a concise manner and provides key points. and also provide me the important part by highlighting it and also generate questions using the transcripts to prepare for an Exam.
 Please provide the summarized text here:-  """
 
 def generate_summary(transcript, prompt):
-    # Get the API key here INSIDE the function
     GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
     if not GROQ_API_KEY:
-        return "❌ Error: GROQ_API_KEY not found. Check your .env file."
+        return "❌ Error: GROQ_API_KEY not found. Check your .env file or Streamlit secrets."
 
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {
@@ -25,7 +22,7 @@ def generate_summary(transcript, prompt):
     }
 
     data = {
-        "model": "llama3-70b-8192",  # or 8b model
+        "model": "llama3-70b-8192",
         "messages": [
             {"role": "system", "content": prompt},
             {"role": "user", "content": transcript}
@@ -42,6 +39,7 @@ def generate_summary(transcript, prompt):
             return f"❌ Groq API Error {response.status_code}: {response.text}"
     except Exception as e:
         return f"❌ Exception occurred: {e}"
+    
 def extract_transcript(youtube_url):
     try:
         video_id = youtube_url.split("watch?v=")[1]
